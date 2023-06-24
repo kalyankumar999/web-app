@@ -4,22 +4,27 @@ import "./styles.css";
 const EmployeeListContainer = (props) => {
   const { dataSet } = props;
 
-  const [value, setValue] = useState(dataSet?.data || []);
+  const [filteredDataSet, setFilteredDataSet] = useState(dataSet?.data || []);
 
   useEffect(() => {
-    if (dataSet?.data.length > 0) setValue(dataSet?.data);
+    if (dataSet?.data.length > 0) setFilteredDataSet(dataSet?.data);
   }, [dataSet]);
 
   const inputHandler = (event) => {
     if (event.target.value === "") {
-      setValue(dataSet.data);
+      setFilteredDataSet(dataSet.data);
       return;
     }
-    const filteredItem = dataSet?.data.filter((item) =>
-      item?.first_name?.toLowerCase().includes(event.target.value.toLowerCase())
-    );
+    const filteredItem =
+      dataSet &&
+      dataSet?.data?.length > 0 &&
+      dataSet?.data?.filter((item) =>
+        item?.first_name
+          ?.toLowerCase()
+          .includes(event.target.value.toLowerCase())
+      );
 
-    setValue(filteredItem);
+    setFilteredDataSet(filteredItem);
   };
 
   return (
@@ -30,9 +35,9 @@ const EmployeeListContainer = (props) => {
             <input type="text" placeholder="Search" onChange={inputHandler} />
           </div>
           <div className="imgContainer">
-            {value &&
-              value?.length > 0 &&
-              value?.map((items) => (
+            {filteredDataSet &&
+              filteredDataSet?.length > 0 &&
+              filteredDataSet?.map((items) => (
                 <div className="listItemContainer">
                   <div className="idDiv">{items?.id}</div>
                   <div className="listDiv">

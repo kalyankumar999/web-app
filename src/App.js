@@ -1,7 +1,7 @@
-import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import EmployeeListContainer from "./Components/EmplyeeListContainer";
+import "./App.css";
 
 function App() {
   const [user, setUser] = useState();
